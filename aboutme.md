@@ -13,4 +13,4 @@ What else do you need?
 
 ### My story
 
-I began in a star as a literal astromonkey, but I don't remember much.  That's **all** *I* can tell you, and **all** *I* know.
+I began in a star as a literal astromonkey, but I don't remember much.  That's **all** I can tell you, and **all** I know.
