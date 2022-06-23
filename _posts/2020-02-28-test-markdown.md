@@ -39,9 +39,9 @@ I am keeping this here for future reference in case I forget how markdown works.
 
 ### Images
 
-![OH-58](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/OH-58D_2.jpg/220px-OH-58D_2.jpg)
+![OH-58](https://helihub-wp.s3.amazonaws.com/wp-content/uploads/oh58d-baghad-sunrise-300x300.jpg)
 
-![OH-58](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/OH-58D_2.jpg/220px-OH-58D_2.jpg){: .mx-auto.d-block :}
+![OH-58](https://d1a2ot8agkqe8w.cloudfront.net/web/2015/07/oh-58d-kiowa_62495.jpg){: .mx-auto.d-block :}
 
 Here's a code chunk:
 
