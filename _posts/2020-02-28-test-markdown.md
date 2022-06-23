@@ -8,7 +8,7 @@ tags: [Announcement],[New],[Exciting]
 comments: true
 ---
 
-I am keeping this here for future reference in case I forget how markdown works.  Here's a link:(https://markdowntutorial.com/)
+I am keeping this here for future reference in case I forget how markdown works.  Here's a link: (https://markdowntutorial.com/)
 
 #Font Modifications:
 
