@@ -12,11 +12,15 @@ I am keeping this here for future reference in case I forget how markdown works.
 
 ### Font Modifications:
 
+Italics, bold, and more:
+
 *Italics*
  **Bold**
  ***Bold Italics***
 
 ### Headings:
+
+Some examples of headings:
 
 # Here is a primary heading
 ## And a secondary
@@ -24,11 +28,15 @@ I am keeping this here for future reference in case I forget how markdown works.
 
 #### Headings extended:
 
+Smaller headings:
+
 #### Fourth
 ##### Fifth
 ###### Sixth
 
 ### Tables
+
+This is what a table looks like:
 
 | Number | Next number | Previous number |
 | :------ |:--- | :--- |
@@ -39,7 +47,11 @@ I am keeping this here for future reference in case I forget how markdown works.
 
 ### Images
 
+Here's an image:
+
 ![OH-58](https://helihub-wp.s3.amazonaws.com/wp-content/uploads/oh58d-baghad-sunrise-300x300.jpg)
+
+And now here's a centered image:
 
 ![OH-58](https://d1a2ot8agkqe8w.cloudfront.net/web/2015/07/oh-58d-kiowa_62495.jpg){: .mx-auto.d-block :}
 
