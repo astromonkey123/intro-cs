@@ -1,36 +1,47 @@
 ---
 layout: post
-title: Sample blog post
-subtitle: Each post also has a subtitle
+title: This Website Exists Now!
+subtitle: The Start of an Adventure
 gh-repo: daattali/beautiful-jekyll
 gh-badge: [star, fork, follow]
-tags: [test]
+tags: [Announcement],[New],[Exciting]
 comments: true
 ---
 
-This is a demo post to show you how to write blog posts with markdown.  I strongly encourage you to [take 5 minutes to learn how to write in markdown](https://markdowntutorial.com/) - it'll teach you how to transform regular text into bold/italics/headings/tables/etc.
+I am keeping this here for future reference in case I forget how markdown works.  Here's a link:(https://markdowntutorial.com/)
 
-**Here is some bold text**
+#Font Modifications:
 
-## Here is a secondary heading
+*Italics*
+**Bold**
+***Bold Italics***
 
-Here's a useless table:
+**Headings:**
+
+# Here is a primary heading
+## And a secondary
+### And a tertiary
+
+##Headings extended:
+
+#### Fourth
+##### Fifth
+###### Sixth
+
+##Tables
 
 | Number | Next number | Previous number |
 | :------ |:--- | :--- |
-| Five | Six | Four |
-| Ten | Eleven | Nine |
-| Seven | Eight | Six |
-| Two | Three | One |
+| 5 | 6 | 4 |
+| 10 | 11 | 9 |
+| 7 | 8 | 6 |
+| 2 | 3 | 1 |
 
+##Images
 
-How about a yummy crepe?
+![OH-58](https://www.airforce-technology.com/wp-content/uploads/sites/6/2017/11/kiowe.jpg)
 
-![Crepe](https://s3-media3.fl.yelpcdn.com/bphoto/cQ1Yoa75m2yUFFbY2xwuqw/348s.jpg)
-
-It can also be centered!
-
-![Crepe](https://s3-media3.fl.yelpcdn.com/bphoto/cQ1Yoa75m2yUFFbY2xwuqw/348s.jpg){: .mx-auto.d-block :}
+![OH-58](https://fullfatthings-keyaero.b-cdn.net/sites/keyaero/files/inline-images/01A%20CroatiaKiowas.jpg){: .mx-auto.d-block :}
 
 Here's a code chunk:
 
