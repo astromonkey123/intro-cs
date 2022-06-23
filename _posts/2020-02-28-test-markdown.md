@@ -39,7 +39,7 @@ I am keeping this here for future reference in case I forget how markdown works.
 
 ## Images
 
-![OH-58](https://www.airforce-technology.com/wp-content/uploads/sites/6/2017/11/kiowe.jpg)
+![OH-58](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/OH-58D_2.jpg/220px-OH-58D_2.jpg)
 
 ![OH-58](https://fullfatthings-keyaero.b-cdn.net/sites/keyaero/files/inline-images/01A%20CroatiaKiowas.jpg){: .mx-auto.d-block :}
 
