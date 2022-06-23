@@ -1,10 +1,10 @@
 ---
 layout: post
-title: This Website Exists Now!
-subtitle: The Start of an Adventure
+title: Sample blog post
+subtitle: Each post also has a subtitle
 gh-repo: daattali/beautiful-jekyll
 gh-badge: [star, fork, follow]
-tags: [Announcement],[New],[Exciting]
+tags: [test]
 comments: true
 ---
 
