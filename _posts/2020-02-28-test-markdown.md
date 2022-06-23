@@ -53,7 +53,7 @@ Here's an image:
 
 And now here's a centered image:
 
-![OH-58](https://d1a2ot8agkqe8w.cloudfront.net/web/2015/07/oh-58d-kiowa_62495.jpg){: .mx-auto.d-block :}
+![OH-58](https://helihub-wp.s3.amazonaws.com/wp-content/uploads/oh58d-baghad-sunrise-300x300.jpg){: .mx-auto.d-block :}
 
 Here's a code chunk:
 
