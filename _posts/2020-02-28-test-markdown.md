@@ -10,25 +10,25 @@ comments: true
 
 I am keeping this here for future reference in case I forget how markdown works.  Here's a link: (https://markdowntutorial.com/)
 
-## Font Modifications:
+### Font Modifications:
 
 *Italics*
  **Bold**
  ***Bold Italics***
 
-## Headings:
+### Headings:
 
 # Here is a primary heading
 ## And a secondary
 ### And a tertiary
 
-## Headings extended:
+#### Headings extended:
 
 #### Fourth
 ##### Fifth
 ###### Sixth
 
-## Tables
+### Tables
 
 | Number | Next number | Previous number |
 | :------ |:--- | :--- |
@@ -37,11 +37,11 @@ I am keeping this here for future reference in case I forget how markdown works.
 | 7 | 8 | 6 |
 | 2 | 3 | 1 |
 
-## Images
+### Images
 
 ![OH-58](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/OH-58D_2.jpg/220px-OH-58D_2.jpg)
 
-![OH-58](https://fullfatthings-keyaero.b-cdn.net/sites/keyaero/files/inline-images/01A%20CroatiaKiowas.jpg){: .mx-auto.d-block :}
+![OH-58](https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/OH-58D_2.jpg/220px-OH-58D_2.jpg){: .mx-auto.d-block :}
 
 Here's a code chunk:
 
