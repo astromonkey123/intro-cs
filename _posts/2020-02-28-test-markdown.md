@@ -8,7 +8,7 @@ tags: [Announcement],[New],[Exciting]
 comments: true
 ---
 
-I am keeping this here for future reference in case I forget how markdown works.  Here's a link: (https://markdowntutorial.com/)
+I am keeping this here for future reference in case I forget how markdown works.  Here's a link to a [tutorial](https://markdowntutorial.com/).
 
 ### Font Modifications:
 
@@ -25,8 +25,6 @@ Some examples of headings:
 # Here is a primary heading
 ## And a secondary
 ### And a tertiary
-
-#### Headings extended:
 
 Smaller headings:
 
@@ -45,7 +43,7 @@ This is what a table looks like:
 | 7 | 8 | 6 |
 | 2 | 3 | 1 |
 
-### Images
+### Embeds:
 
 Here's an image:
 
