@@ -14,9 +14,9 @@ I am keeping this here for future reference in case I forget how markdown works.
 
 Italics, bold, and more:
 
-*Italics*
- **Bold**
- ***Bold Italics***
+*Italics*, 
+**Bold**, 
+and ***Bold Italics***
 
 ### Headings:
 
