@@ -13,8 +13,8 @@ I am keeping this here for future reference in case I forget how markdown works.
 ## Font Modifications:
 
 *Italics*
-**Bold**
-***Bold Italics***
+ **Bold**
+ ***Bold Italics***
 
 ## Headings:
 
