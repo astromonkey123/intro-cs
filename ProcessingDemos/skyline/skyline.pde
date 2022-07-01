@@ -22,9 +22,9 @@ void buildingType2 (boolean hasRoof, float x, float y, float w, float h) {
 
 void drawBackground() {
   for (int i = 0; i < height; i++ ) {
-    r = map(i, 0, height-1, 237, 237);
-    g = map(i, 0, height-1, 116, 131);
-    b = map(i, 0, height-1, 130, 85);
+    r = map(i, 0, height, 237, 237);
+    g = map(i, 0, height, 116, 131);
+    b = map(i, 0, height, 130, 85);
     stroke(r, g, b);
     line(0, i, width, i);
   }

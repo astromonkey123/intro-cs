@@ -46,15 +46,8 @@ boolean collision3L = false;              // Detection of collision for circle 3
 boolean collision3R = false;              // Detection of collision for circle 3 on the right of a pin
 int[] pinX = {250, 200, 300, 150, 250, 350, 400, 300, 200, 100, 50, 150, 250, 350, 450};    // Array of pin X coordinates
 int[] pinY = {150, 200, 200, 250, 250, 250, 300, 300, 300, 300, 350, 350, 350, 350, 350};   // Array of pin Y coordinates
-float coord_a = random(50, 450);          // Coordiantes for random shape in background
-float coord_b = random(50, 450);
-float coord_c = random(50, 450);
-float coord_d = random(50, 450);
-float coord_e = random(50, 450);
-float coord_f = random(50, 450);
-float coord_g = random(50, 450);
-float coord_h = random(50, 450);
-float coord_i = random(50, 450);
+float[] bgCoords = {random(50, 450), random(50, 450), random(50, 450), random(50, 450), 
+                    random(50, 450), random(50, 450), random(50, 450), random(50, 450), random(50, 450)}; // Random shape in background
 float backgroundStatic = random(100, 150);  // Random background color
 boolean bounceAgain1 = true;                // Booleans to make balls bounce again if hitting bottom
 boolean bounceAgain2 = true;
@@ -65,8 +58,8 @@ void randomBackground() {
   background(backgroundStatic);
   noStroke();
   fill(124, 152, 255);
-  quad(coord_a, coord_b, coord_b, coord_c, coord_c, coord_d, coord_d, coord_e);
-  quad(coord_e, coord_f, coord_f, coord_g, coord_g, coord_h, coord_h, coord_i);
+  quad(bgCoords[0], bgCoords[1], bgCoords[1], bgCoords[2], bgCoords[2], bgCoords[3], bgCoords[3], bgCoords[4]);
+  quad(bgCoords[4], bgCoords[5], bgCoords[5], bgCoords[6], bgCoords[6], bgCoords[7], bgCoords[7], bgCoords[8]);
   for (int i = 0; i < 10; i ++) {
     fill(200);
     rect(247.5, 60*i, 5, 30);
@@ -102,15 +95,9 @@ void drawButtons() {
       bounceAgain1 = true;
       bounceAgain2 = true;
       bounceAgain3 = true;
-      coord_a = random(50, 450);          // Coordiantes for random shape in background
-      coord_b = random(50, 450);
-      coord_c = random(50, 450);
-      coord_d = random(50, 450);
-      coord_e = random(50, 450);
-      coord_f = random(50, 450);
-      coord_g = random(50, 450);
-      coord_h = random(50, 450);
-      coord_i = random(50, 450);
+      for (int i = 0; i < bgCoords.length; i++) {    // Randomize background shape
+        bgCoords[i] = random(50, 450);
+      }
     }
     if (mouseX > 280 && mouseX < 480) {
       exit();
