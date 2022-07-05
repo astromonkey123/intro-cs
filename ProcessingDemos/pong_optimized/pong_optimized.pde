@@ -9,7 +9,7 @@ float rightPaddleY = 250;                  // Right paddle up/down movement
 float leftPaddleY = 250;                   // Left paddle up/down movement
 int bounceCount;
 float speedYDirection;
-float difficulty = 10;        // Controlls game difficulty, the smaller the number, the more difficult (5 is nearly impossible, 15 is too easy)
+float difficulty = 5;        // Controlls game difficulty, the smaller the number, the more difficult (5 is nearly impossible, 15 is too easy)
 
 // Check if ball hits left bumper
 boolean ballHittingLeft(float bumperY, float ballY, float ballX) {
@@ -73,7 +73,7 @@ void draw() {
   fill(255);
   
   // Check keys for movement of bumpers
-  rightPaddleY = mouseY-50;
+  rightPaddleY = circleY-50;
   float error = circleY-50-leftPaddleY;
   leftPaddleY+=(error/difficulty);
   rect(30, leftPaddleY, 20, 100);
