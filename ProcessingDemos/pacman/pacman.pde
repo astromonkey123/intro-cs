@@ -102,7 +102,7 @@ void drawGhost(float x, float y, int type) {
 
 
 void setup() {
-  size(500, 500);
+  size(800, 400);
 }
 
 void draw() {
