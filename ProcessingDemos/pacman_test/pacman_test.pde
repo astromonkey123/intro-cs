@@ -94,7 +94,120 @@ void setup() {
   rect(400, 160, 70, 20);
   fill(100);
   rect(400, 155, 70, 5);
+
+  noStroke();
+  fill(255);
+  rectMode(CENTER);
+
+
+  square(90, 125, 10);
+  square(110, 125, 10);
+  square(90, 50, 10);
+  square(110, 50, 10);
+  square(150, 87.5, 10);
+  square(50, 87.5, 10);
+
+  square(690, 275, 10);
+  square(710, 275, 10);
+  square(690, 350, 10);
+  square(710, 350, 10);
+  square(650, 312.5, 10);
+  square(750, 312.5, 10);
+
+  square(500, 87.5, 10);
+  square(575, 87.5, 10);
+  square(750, 87.5, 10);
+
+  square(50, 312.5, 10);
+  square(225, 312.5, 10);
+  square(300, 312.5, 10);
+
+  square(90, 275, 10);
+  square(110, 275, 10);
+  square(690, 125, 10);
+  square(710, 125, 10);
+
+  square(500, 170, 10);
+  square(500, 190, 10);
+  square(500, 210, 10);
+  square(500, 230, 10);
+
+  square(300, 170, 10);
+  square(300, 190, 10);
+  square(300, 210, 10);
+  square(300, 230, 10);
+
+
+  square(350, 275, 10);
+  square(370, 275, 10);
+  square(390, 275, 10);
+  square(410, 275, 10);
+  square(430, 275, 10);
+  square(450, 275, 10);
+
+  square(350, 125, 10);
+  square(370, 125, 10);
+  square(390, 125, 10);
+  square(410, 125, 10);
+  square(430, 125, 10);
+  square(450, 125, 10);
+
+  square(90, 350, 10);
+  square(109, 350, 10);
+  square(128, 350, 10);
+  square(147, 350, 10);
+  square(166, 350, 10);
+  square(185, 350, 10);
+
+  square(615, 50, 10);
+  square(634, 50, 10);
+  square(653, 50, 10);
+  square(672, 50, 10);
+  square(691, 50, 10);
+  square(710, 50, 10);
+
+  square(340, 350, 10);
+  square(360, 350, 10);
+  square(380, 350, 10);
+  square(400, 350, 10);
+  square(420, 350, 10);
+  square(455, 350, 10);
+  square(475, 350, 10);
+  square(495, 350, 10);
+  square(515, 350, 10);
+  square(535, 350, 10);
+
+  square(265, 50, 10);
+  square(360, 350, 10);
+  square(380, 350, 10);
+  square(400, 350, 10);
+  square(420, 350, 10);
+  square(455, 350, 10);
+  square(475, 350, 10);
+  square(495, 350, 10);
+  square(515, 350, 10);
+  square(535, 350, 10);
+
+
+
+  square(225, 90, 10);
+  square(225, 110, 10);
+  square(225, 130, 10);
+  square(225, 150, 10);
+  square(225, 175, 10);
+  square(225, 195, 10);
+  square(225, 215, 10);
+  square(225, 235, 10);
+
+
 }
 
 void draw() {
+}
+
+void mousePressed() {
+  println(mouseX, mouseY);
+  stroke(255);
+  strokeWeight(5);
+  point(mouseX, mouseY);
 }
