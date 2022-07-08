@@ -1,22 +1,22 @@
 /* //<>//
 Ethan Rosenfeld
-7/8/2022
-Final Project: Pac-Man
+ 7/8/2022
+ Final Project: Pac-Man
  
-  Challenges / Issues:
-    - Working with intersections so that I didn't have to set up collisions for the walls
-    - Keeping track of all of the different variables
-    - Making the ghosts move towards the player while staying on the correct paths
+ Challenges / Issues:
+ - Working with intersections so that I didn't have to set up collisions for the walls
+ - Keeping track of all of the different variables
+ - Making the ghosts move towards the player while staying on the correct paths
  
-  Future Possibilities:
-    - Clean up some areas of code
-    - Add more animations for player death, ghost movement, etc.
-   
-  New Information:
-    - Found a work-around for mazes
-    - Became more familliar with collision logic and keeping track of scores
+ Future Possibilities:
+ - Clean up some areas of code
+ - Add more animations for player death, ghost movement, etc.
  
-*/
+ New Information:
+ - Found a work-around for mazes
+ - Became more familliar with collision logic and keeping track of scores
+ 
+ */
 
 boolean isAlive = true;  // If pacman is alive
 boolean isWin = false;   // If the game has been won
@@ -70,12 +70,14 @@ boolean[] allowedGhostLeft = {true, true, true, true};
 boolean[] allowedGhostRight = {true, true, true, true};
 String[] ghostDirection = {"left", "right", "left", "right"};    // Ghost direction
 
-//Check if a ghost is on an intersection
+//Check if a ghost is on an intersections
 void checkGhostIntersection(float x, float y, boolean up, boolean down, boolean left, boolean right) {
   for (int i = 0; i < ghostXY[0].length; i++) {
-    float x_dif = pac_x - ghostXY[0][i];  // If ghost should move left or right
-    float y_dif = pac_y - ghostXY[1][i];  // If ghost should move up or down to get to pacman
     if (circleCircleCollisionCheck(ghostXY[0][i], ghostXY[1][i], 2, x, y, 2)) {
+      println("Hitting");
+      ghost_dx[i] = 0;
+      ghost_dy[i] = 0;
+      int randomDir = int(random(0, 4));
       isGhostOnIntersection[i] = true;
       ghostXY[0][i] = x;
       ghostXY[1][i] = y;
@@ -83,26 +85,29 @@ void checkGhostIntersection(float x, float y, boolean up, boolean down, boolean 
       allowedGhostDown[i] = down;
       allowedGhostLeft[i] = left;
       allowedGhostRight[i] = right;
+      if (randomDir == 4) {
+        direction = "none";
+      }
       if (up) {  // If up is allowed
-        if (y_dif > 0 && isGhostOnIntersection[i]) {
+        if (randomDir == 0 && isGhostOnIntersection[i]) {
           ghostXY[1][i] = y-6;
           ghostDirection[i] = "up";
         }
       }
       if (down) {  // If down is allowed
-        if (y_dif < 0 && isGhostOnIntersection[i]) {
+        if (randomDir == 1 && isGhostOnIntersection[i]) {
           ghostXY[1][i]= y+6;
           ghostDirection[i] = "down";
         }
       }
       if (left) {  // If left is allowed
-        if (x_dif > 0 && isGhostOnIntersection[i]) {
+        if (randomDir == 2 && isGhostOnIntersection[i]) {
           ghostXY[0][i] = x-6;
           ghostDirection[i] = "left";
         }
       }
       if (right) {  // If right is allowed
-        if (x_dif < 0 && isGhostOnIntersection[i]) {
+        if (randomDir == 3 && isGhostOnIntersection[i]) {
           ghostXY[0][i] = x+6;
           ghostDirection[i] = "right";
         }
@@ -143,7 +148,7 @@ void moveGhosts() {
   if (ghostCount > 0) {  // Bring out the ghosts one by one
     if (isFirstGhost[0]) {
       ghostXY[0][0] = 400;
-      ghostXY[1][0] = 120;
+      ghostXY[1][0] = 125;
       isFirstGhost[0] = false;
     }
     ghostXY[0][0] += ghost_dx[0];
@@ -152,7 +157,7 @@ void moveGhosts() {
   if (ghostCount > 1) {
     if (isFirstGhost[1]) {
       ghostXY[0][1] = 400;
-      ghostXY[1][1] = 120;
+      ghostXY[1][1] = 125;
       isFirstGhost[1] = false;
     }
     ghostXY[0][1] += ghost_dx[1];
@@ -161,7 +166,7 @@ void moveGhosts() {
   if (ghostCount > 2) {
     if (isFirstGhost[2]) {
       ghostXY[0][2] = 400;
-      ghostXY[1][2] = 120;
+      ghostXY[1][2] = 125;
       isFirstGhost[2] = false;
     }
     ghostXY[0][2] += ghost_dx[2];
@@ -170,7 +175,7 @@ void moveGhosts() {
   if (ghostCount > 3) {
     if (isFirstGhost[3]) {
       ghostXY[0][3] = 400;
-      ghostXY[1][3] = 120;
+      ghostXY[1][3] = 125;
       isFirstGhost[3] = false;
     }
     ghostXY[0][3] += ghost_dx[3];
@@ -206,7 +211,7 @@ void changeDifficulty() {
     ghostCount = 3;
   } else if (score > 0 && score < 400) {
     ghostCount = 4;
-  } else if (score > 0 && score < 500) {
+  } else if (score > 0 && score < 600) {
     ghostCount = 4;
   } else {
     ghostCount = 0;
@@ -324,12 +329,11 @@ void checkGhostCollision() {
     double xDif = pac_x - ghostXY[0][i];
     double yDif = pac_y - ghostXY[1][i];
     double distanceSquared = xDif * xDif + yDif * yDif;
-    boolean collision = distanceSquared < (15 + 15) * (15 + 15); 
+    boolean collision = distanceSquared < (15 + 15) * (15 + 15);
     if (collision && !isEatingGhosts) {
       isAlive = false;
     } else if (collision && isEatingGhosts) {
       isAlive = true;
-      score += 50;
     }
     if (isEatingGhostsTimer <= 50 && isEatingGhostsTimer >= 0) {
       isEatingGhosts = false;
@@ -346,7 +350,7 @@ void switchAnimation() {
   }
 }
 
-// Teleport from side to side
+// Teleport pacman from side to side
 void teleportOnWalls() {
   if (pac_x <= 15) {
     pac_x = 780;
@@ -354,6 +358,19 @@ void teleportOnWalls() {
   } else if (pac_x >= 785) {
     pac_x = 20;
     direction = "right";
+  }
+}
+
+// Teleport ghosts from side to side
+void teleportGhostOnWalls() {
+  for (int i = 0; i < ghostXY[0].length; i++) {
+    if (ghostXY[0][i] <= 15) {
+      ghostXY[0][i] = 780;
+      ghostDirection[i] = "left";
+    } else if (ghostXY[0][i] >= 785) {
+      ghostXY[0][i] = 20;
+      ghostDirection[i] = "right";
+    }
   }
 }
 
@@ -544,7 +561,11 @@ void deathAnimation(float x, float y) {
   pac_x = 300;
   pac_y = 350;
   direction = "none";
-  score -= 100;
+  if (score > 100) {
+      score -= 100;
+  } else {
+    score -= score;
+  }
 }
 
 // Draw ghosts
@@ -565,24 +586,24 @@ void drawGhost(float x, float y, int type) {
   translate(x, y);
   beginShape();
   beginShape();
-  vertex(18, 0);
-  vertex(18, 30);
-  vertex(12, 25);
-  vertex(6, 30);
-  vertex(0, 25);
-  vertex(-6, 30);
-  vertex(-12, 25);
-  vertex(-18, 30);
-  vertex(-18, 0);
+  vertex(18, -5);
+  vertex(18, 25);
+  vertex(12, 20);
+  vertex(6, 25);
+  vertex(0, 20);
+  vertex(-6, 25);
+  vertex(-12, 20);
+  vertex(-18, 25);
+  vertex(-18, -5);
   endShape();
-  arc(0, 0, 36, 36, radians(180), radians(360), OPEN);
+  arc(0, -5, 36, 36, radians(180), radians(360), OPEN);
   fill(255);
-  circle(-7, -3, 11);
-  circle(7, -3, 11);
+  circle(-7, -8, 11);
+  circle(7, -8, 11);
   strokeWeight(3);
   stroke(0);
-  point(7, -3);
-  point(-7, -3);
+  point(7, -8);
+  point(-7, -8);
   pop();
 }
 
@@ -682,6 +703,7 @@ void draw() {
     changeDifficulty();
     moveGhosts();
     teleportOnWalls();
+    teleportGhostOnWalls();
     switchAnimation();
     checkGhostCollision();
     drawScore();
@@ -733,7 +755,7 @@ void mousePressed() {
       for (int i = 0; i < ghostType.length; i++) {
         ghostType[i] = int(random(0, 4));
       }
-      ghostXY[0][0] = 360; 
+      ghostXY[0][0] = 360;
       ghostXY[0][1] = 386.666;
       ghostXY[0][2] = 412.333;
       ghostXY[0][3] = 440;
@@ -747,6 +769,16 @@ void mousePressed() {
       isFirstGhost[3] = true;
       isEatingGhosts = false;
       isEatingGhostsTimer = 0;
+      ghostDirection[0] = "left";
+      ghostDirection[1] = "right";
+      ghostDirection[2] = "left";
+      ghostDirection[3] = "right";
+      for (int i = 0; i < allowedGhostUp.length; i++) {
+        allowedGhostUp[i] = false;
+        allowedGhostDown[i] = false;
+        allowedGhostLeft[i] = true;
+        allowedGhostRight[i] = true;
+      }
     }
   }
 }
@@ -754,9 +786,9 @@ void mousePressed() {
 /*
 Peer Review:
  
-  Maxwell
-    - Work on the ghost pathfinding
-      - In progress
-    - Make the ghosts only able to move in either the X or Y directions
-      - Completed
-*/
+ Maxwell
+ - Work on the ghost pathfinding
+ - In progress
+ - Make the ghosts only able to move in either the X or Y directions
+ - Completed
+ */
