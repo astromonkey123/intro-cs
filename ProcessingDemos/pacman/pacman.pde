@@ -1,35 +1,219 @@
-boolean isAlive = true;
-boolean isWin = false;
+/* //<>//
+Ethan Rosenfeld
+7/8/2022
+Final Project: Pac-Man
+ 
+  Challenges / Issues:
+    - Working with intersections so that I didn't have to set up collisions for the walls
+    - Keeping track of all of the different variables
+    - Making the ghosts move towards the player while staying on the correct paths
+ 
+  Future Possibilities:
+    - Clean up some areas of code
+    - Add more animations for player death, ghost movement, etc.
+   
+  New Information:
+    - Found a work-around for mazes
+    - Became more familliar with collision logic and keeping track of scores
+ 
+*/
+
+boolean isAlive = true;  // If pacman is alive
+boolean isWin = false;   // If the game has been won
+boolean[] isFirstGhost = {true, true, true, true};    // Stops the ghosts from moving until out of cage
+float[] ghost_dx = {0, 0, 0, 0};    // Change in ghost X
+float[] ghost_dy = {0, 0, 0, 0};    // Change in ghost Y
+// Coordinates for coins
 float[] coinX = {90, 110, 90, 110, 150, 50, 690, 710, 690, 710, 650, 750, 500, 575, 750, 50, 225, 300, 90, 110, 690, 710, 500, 500, 500, 500, 300, 300, 300, 300, 350, 370, 390, 410, 430, 450, 350, 370, 390, 410, 430, 450, 90, 109, 128, 147, 166, 185, 615, 634, 653, 672, 691, 710, 340, 360, 380, 400, 420, 455, 475, 495, 515, 535, 265, 360, 380, 400, 420, 455, 475, 495, 515, 535, 265, 285, 305, 325, 345, 380, 400, 420, 440, 460, 225, 225, 225, 225, 225, 225, 225, 225, 575, 575, 575, 575, 575, 575, 575, 575};
-float[] coinXBackup = {90, 110, 90, 110, 150, 50, 690, 710, 690, 710, 650, 750, 500, 575, 750, 50, 225, 300, 90, 110, 690, 710, 500, 500, 500, 500, 300, 300, 300, 300, 350, 370, 390, 410, 430, 450, 350, 370, 390, 410, 430, 450, 90, 109, 128, 147, 166, 185, 615, 634, 653, 672, 691, 710, 340, 360, 380, 400, 420, 455, 475, 495, 515, 535, 265, 360, 380, 400, 420, 455, 475, 495, 515, 535, 265, 285, 305, 325, 345, 380, 400, 420, 440, 460, 225, 225, 225, 225, 225, 225, 225, 255, 575, 575, 575, 575, 575, 575, 575, 575};
+float[] coinXBackup = {90, 110, 90, 110, 150, 50, 690, 710, 690, 710, 650, 750, 500, 575, 750, 50, 225, 300, 90, 110, 690, 710, 500, 500, 500, 500, 300, 300, 300, 300, 350, 370, 390, 410, 430, 450, 350, 370, 390, 410, 430, 450, 90, 109, 128, 147, 166, 185, 615, 634, 653, 672, 691, 710, 340, 360, 380, 400, 420, 455, 475, 495, 515, 535, 265, 360, 380, 400, 420, 455, 475, 495, 515, 535, 265, 285, 305, 325, 345, 380, 400, 420, 440, 460, 225, 225, 225, 225, 225, 225, 225, 225, 575, 575, 575, 575, 575, 575, 575, 575};
 float[] coinY = {125, 125, 50, 50, 87.5, 87.5, 275, 275, 350, 350, 312.5, 312.5, 87.5, 87.5, 87.5, 312.5, 312.5, 312.5, 275, 275, 125, 125, 170, 190, 210, 230, 170, 190, 210, 230, 275, 275, 275, 275, 275, 275, 125, 125, 125, 125, 125, 125, 350, 350, 350, 350, 350, 350, 50, 50, 50, 50, 50, 50, 350, 350, 350, 350, 350, 350, 350, 350, 350, 350, 50, 350, 350, 350, 350, 350, 350, 350, 350, 350, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 90, 110, 130, 150, 175, 195, 215, 235, 165, 185, 205, 225, 250, 270, 290, 310};
 float[] coinYBackup = {125, 125, 50, 50, 87.5, 87.5, 275, 275, 350, 350, 312.5, 312.5, 87.5, 87.5, 87.5, 312.5, 312.5, 312.5, 275, 275, 125, 125, 170, 190, 210, 230, 170, 190, 210, 230, 275, 275, 275, 275, 275, 275, 125, 125, 125, 125, 125, 125, 350, 350, 350, 350, 350, 350, 50, 50, 50, 50, 50, 50, 350, 350, 350, 350, 350, 350, 350, 350, 350, 350, 50, 350, 350, 350, 350, 350, 350, 350, 350, 350, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 90, 110, 130, 150, 175, 195, 215, 235, 165, 185, 205, 225, 250, 270, 290, 310};
-int deathCount = 3;
-boolean allowedUp = false;
+float[] coinX_Large = {50, 750, 50, 750};
+float[] coinXBackup_Large = {50, 750, 50, 750};
+float[] coinY_Large = {50, 50, 350, 350};
+float[] coinYBackup_Large = {50, 50, 350, 350};
+int deathCount = 3;  // Pacman death count
+boolean allowedUp = false;    // If pacman is allowed to go a direction
 boolean allowedDown = false;
 boolean allowedLeft = true;
 boolean allowedRight = true;
+// Coordinates for intersections
 float[] interX = {50, 50, 50, 50, 150, 150, 750, 750, 750, 750, 650, 650, 150, 650, 650, 150, 225, 225, 575, 575, 300, 300, 500, 500, 500, 300, 575, 225};
 float[] interY = {125, 50, 350, 275, 125, 50, 125, 50, 350, 275, 350, 275, 200, 200, 125, 275, 350, 275, 125, 50, 350, 275, 125, 50, 275, 125, 350, 50};
+// Check if up/down/left/right is allowed at each intersection
 boolean[] interUp = {true, false, true, false, true, false, true, false, true, false, true, true, true, true, false, true, true, true, true, false, true, true, true, false, true, false, true, false};
 boolean[] interDown = {false, true, false, true, true, true, false, true, false, true, false, true, true, true, true, false, false, true, true, true, false, true, true, true, false, true, false, true};
 boolean[] interLeft = {false, false, false, false, true, true, true, true, true, true, true, false, true, false, true, true, true, true, true, false, false, true, true, true, true, false, true, true};
 boolean[] interRight = {true, true, true, true, false, true, false, false, false, false, true, true, false, true, true, true, false, true, true, true, true, true, true, false, false, true, true, true};
-float pac_x = 300;
-float pac_y = 350;
-float pac_dx = 0;
-float pac_dy = 0;
-float[][] ghostXY = {{350, 400, 450}, {200, 200, 200}};
-int[] ghostType = {0, 1, 2};
-String direction = "none";
+float pac_x = 300;    // Pacman X
+float pac_y = 350;    // Pacman Y
+float pac_dx = 0;    // Change in X
+float pac_dy = 0;    // Change in Y
+float[][] ghostXY = {{360, 386.666, 412.333, 440}, {190, 200, 190, 200}};    // Ghost XY
+int[] ghostType = {int(random(0, 4)), int(random(0, 4)), int(random(0, 4)), int(random(0, 4))};    // Ghost color
+String direction = "none";    // Pacman direction
+// Pacman animation variables
 boolean animationSwitch = true;
 int animationStatus = 0;
-String whatToDraw = "Start";
-int score = 0;
-int coinsCollected = 0;
-boolean isOnIntersection = true;
-int[] highestScore = new int[0];
+String whatToDraw = "Start";    // Variable to control game screen
+int score = 0;    // Game score
+int coinsCollected = 0;    // Collected coins count
+boolean isOnIntersection = true;    // Check if pacman is on an intersection
+boolean[] isGhostOnIntersection = {true, true, true, true};    // Check if ghost is on an intersection
+int[] highestScore = new int[0];    // Save highest score in an array
+int ghostCount = 0;    // Number of ghosts
+boolean isEatingGhosts = false;    // If pacman is invincible
+int isEatingGhostsTimer = 0;
+boolean[] allowedGhostUp = {false, false, false, false};    // If ghosts are allowed to go in a direction
+boolean[] allowedGhostDown = {false, false, false, false};
+boolean[] allowedGhostLeft = {true, true, true, true};
+boolean[] allowedGhostRight = {true, true, true, true};
+String[] ghostDirection = {"left", "right", "left", "right"};    // Ghost direction
 
+//Check if a ghost is on an intersection
+void checkGhostIntersection(float x, float y, boolean up, boolean down, boolean left, boolean right) {
+  for (int i = 0; i < ghostXY[0].length; i++) {
+    float x_dif = pac_x - ghostXY[0][i];  // If ghost should move left or right
+    float y_dif = pac_y - ghostXY[1][i];  // If ghost should move up or down to get to pacman
+    if (circleCircleCollisionCheck(ghostXY[0][i], ghostXY[1][i], 2, x, y, 2)) {
+      isGhostOnIntersection[i] = true;
+      ghostXY[0][i] = x;
+      ghostXY[1][i] = y;
+      allowedGhostUp[i] = up;
+      allowedGhostDown[i] = down;
+      allowedGhostLeft[i] = left;
+      allowedGhostRight[i] = right;
+      if (up) {  // If up is allowed
+        if (y_dif > 0 && isGhostOnIntersection[i]) {
+          ghostXY[1][i] = y-6;
+          ghostDirection[i] = "up";
+        }
+      }
+      if (down) {  // If down is allowed
+        if (y_dif < 0 && isGhostOnIntersection[i]) {
+          ghostXY[1][i]= y+6;
+          ghostDirection[i] = "down";
+        }
+      }
+      if (left) {  // If left is allowed
+        if (x_dif > 0 && isGhostOnIntersection[i]) {
+          ghostXY[0][i] = x-6;
+          ghostDirection[i] = "left";
+        }
+      }
+      if (right) {  // If right is allowed
+        if (x_dif < 0 && isGhostOnIntersection[i]) {
+          ghostXY[0][i] = x+6;
+          ghostDirection[i] = "right";
+        }
+      }
+    } else {
+      isGhostOnIntersection[i] = false;
+    }
+  }
+}
+
+// Draw coins around the map
+void drawCoins() {
+  fill(243, 174, 167);
+  noStroke();
+  for (int i = 0; i < coinX.length; i++) {  // Small coins
+    square(coinX[i], coinY[i], 10);
+    if (circleCircleCollisionCheck(pac_x, pac_y, 45, coinX[i], coinY[i], 10)) {
+      score += 5;
+      coinsCollected ++;
+      coinX[i] = -100;
+      coinY[i] = -100;
+    }
+  }
+  for (int i = 0; i < coinX_Large.length; i++) {  // Large coins
+    circle(coinX_Large[i], coinY_Large[i], 20);
+    if (circleCircleCollisionCheck(pac_x, pac_y, 45, coinX_Large[i], coinY_Large[i], 10)) {
+      score += 20;
+      coinX_Large[i] = -100;
+      coinY_Large[i] = -100;
+      isEatingGhosts = true;
+      isEatingGhostsTimer = 700;
+    }
+  }
+}
+
+// Move ghosts
+void moveGhosts() {
+  if (ghostCount > 0) {  // Bring out the ghosts one by one
+    if (isFirstGhost[0]) {
+      ghostXY[0][0] = 400;
+      ghostXY[1][0] = 120;
+      isFirstGhost[0] = false;
+    }
+    ghostXY[0][0] += ghost_dx[0];
+    ghostXY[1][0] += ghost_dy[0];
+  }
+  if (ghostCount > 1) {
+    if (isFirstGhost[1]) {
+      ghostXY[0][1] = 400;
+      ghostXY[1][1] = 120;
+      isFirstGhost[1] = false;
+    }
+    ghostXY[0][1] += ghost_dx[1];
+    ghostXY[1][1] += ghost_dy[1];
+  }
+  if (ghostCount > 2) {
+    if (isFirstGhost[2]) {
+      ghostXY[0][2] = 400;
+      ghostXY[1][2] = 120;
+      isFirstGhost[2] = false;
+    }
+    ghostXY[0][2] += ghost_dx[2];
+    ghostXY[1][2] += ghost_dy[2];
+  }
+  if (ghostCount > 3) {
+    if (isFirstGhost[3]) {
+      ghostXY[0][3] = 400;
+      ghostXY[1][3] = 120;
+      isFirstGhost[3] = false;
+    }
+    ghostXY[0][3] += ghost_dx[3];
+    ghostXY[1][3] += ghost_dy[3];
+  }
+  for (int i = 0; i < ghostXY[0].length; i++) {  // Find what direction ghosts should be moving
+    if (ghostDirection[i] == "up" && allowedGhostUp[i]) {
+      ghost_dx[i] = 0;
+      ghost_dy[i] = -1.25;
+    } else if (ghostDirection[i] == "down" && allowedGhostDown[i]) {
+      ghost_dx[i] = 0;
+      ghost_dy[i] = 1.25;
+    } else if (ghostDirection[i] == "left" && allowedGhostLeft[i]) {
+      ghost_dx[i] = -1.25;
+      ghost_dy[i] = 0;
+    } else if (ghostDirection[i] == "right" && allowedGhostRight[i]) {
+      ghost_dx[i] = 1.25;
+      ghost_dy[i] = 0;
+    } else if (ghostDirection[i] == "none") {
+      ghost_dx[i] = 0;
+      ghost_dy[i] = 0;
+    }
+  }
+}
+
+// Increase ghost count as game progresses
+void changeDifficulty() {
+  if (score > 0 && score < 100) {
+    ghostCount = 1;
+  } else if (score > 0 && score < 200) {
+    ghostCount = 2;
+  } else if (score > 0 && score < 300) {
+    ghostCount = 3;
+  } else if (score > 0 && score < 400) {
+    ghostCount = 4;
+  } else if (score > 0 && score < 500) {
+    ghostCount = 4;
+  } else {
+    ghostCount = 0;
+  }
+}
+
+// Check and save the highest score
 int checkHighestScore() {
   int highest = 0;
   highestScore = append(highestScore, score);
@@ -41,12 +225,15 @@ int checkHighestScore() {
   return highest;
 }
 
+// Draw score on screen
 void drawScore() {
   fill(255, 251, 83);
   textSize(30);
   textAlign(CORNER);
   text("Score: " + score, 200, 415);
 }
+
+// Draw lives on screen
 void drawDeathCount() {
   fill(255, 251, 83);
   textSize(30);
@@ -64,6 +251,7 @@ void drawDeathCount() {
   }
 }
 
+// Draw reset button
 void playAgainButton() {
   fill(230, 141, 69);
   rectMode(CENTER);
@@ -74,6 +262,7 @@ void playAgainButton() {
   text("Play Again!", 150, 340);
 }
 
+// Draw score box on end and win screens
 void drawScoreBox() {
   fill(230, 141, 69);
   rectMode(CENTER);
@@ -87,8 +276,9 @@ void drawScoreBox() {
   text("Highest score: " + checkHighestScore(), 400, 245);
 }
 
+// Lose screen function
 void drawLoseScreen() {
-  background(0);
+  drawMap();
   fill(230, 141, 69);
   rectMode(CENTER);
   rect(400, 70, 400, 100, 20);
@@ -100,8 +290,9 @@ void drawLoseScreen() {
   playAgainButton();
 }
 
+// Win screen function
 void drawWinScreen() {
-  background(0);
+  drawMap();
   fill(230, 141, 69);
   rectMode(CENTER);
   rect(400, 70, 400, 100, 20);
@@ -113,30 +304,40 @@ void drawWinScreen() {
   playAgainButton();
 }
 
+// Check if player lost
 void checkIfLose() {
   if (deathCount <= 0) {
     whatToDraw = "Lose";
   }
 }
 
+// Check if player won
 void checkIfWin() {
   if (coinsCollected >= 100 && deathCount > 0) {
     whatToDraw = "Win";
   }
 }
 
+// Check if pacman is hitting a ghost
 void checkGhostCollision() {
   for (int i = 0; i < ghostXY[0].length; i++) {
     double xDif = pac_x - ghostXY[0][i];
     double yDif = pac_y - ghostXY[1][i];
     double distanceSquared = xDif * xDif + yDif * yDif;
-    boolean collision = distanceSquared < (15 + 15) * (15 + 15);
-    if (collision) {
+    boolean collision = distanceSquared < (15 + 15) * (15 + 15); 
+    if (collision && !isEatingGhosts) {
       isAlive = false;
+    } else if (collision && isEatingGhosts) {
+      isAlive = true;
+      score += 50;
+    }
+    if (isEatingGhostsTimer <= 50 && isEatingGhostsTimer >= 0) {
+      isEatingGhosts = false;
     }
   }
 }
 
+// Switch pacman animation status
 void switchAnimation() {
   if (animationSwitch) {
     animationStatus--;
@@ -145,6 +346,7 @@ void switchAnimation() {
   }
 }
 
+// Teleport from side to side
 void teleportOnWalls() {
   if (pac_x <= 15) {
     pac_x = 780;
@@ -155,8 +357,9 @@ void teleportOnWalls() {
   }
 }
 
+// Function for start screen
 void drawStartScreen() {
-  background(0);
+  drawMap();
   fill(230, 141, 69);
   rectMode(CENTER);
   rect(400, 70, 400, 100, 20);
@@ -169,6 +372,7 @@ void drawStartScreen() {
   drawTutorialButton();
 }
 
+// Draw play button
 void drawStartButton() {
   fill(230, 141, 69);
   rectMode(CENTER);
@@ -179,6 +383,7 @@ void drawStartButton() {
   text("Play!", 400, 320);
 }
 
+// Draw quit button
 void drawExitButton() {
   fill(230, 141, 69);
   rectMode(CENTER);
@@ -189,6 +394,7 @@ void drawExitButton() {
   text("Exit", 650, 340);
 }
 
+// Draw help button
 void drawTutorialButton() {
   fill(230, 141, 69);
   rectMode(CENTER);
@@ -199,8 +405,9 @@ void drawTutorialButton() {
   text("Help", 150, 340);
 }
 
+// Function for tutorial screen
 void drawHelpScreen() {
-  background(0);
+  drawMap();
   fill(230, 141, 69);
   rectMode(CENTER);
   rect(400, 50, 200, 75, 20);
@@ -211,12 +418,14 @@ void drawHelpScreen() {
   drawBackButton();
   fill(238, 203, 88);
   textAlign(CORNER);
-  textSize(20);
-  text("1. Collect as many dots as possible while not dying to the ghosts.", 50, 150);
-  text("2. The large dots allow you to eat ghosts, making you invincible for 10 seconds.", 50, 200);
-  text("3. Use the arrow keys to move.", 50, 250);
+  textSize(25);
+  text("Welcome to my version of Pac-Man! The rules are as follows:", 50, 125);
+  text("1. Your goal is to collect all the coins and avoid death.", 50, 175);
+  text("2. The arrow keys are used to move.", 50, 225);
+  text("3. The large coins will allow you to survive from ghosts for 10 seconds.", 50, 275);
 }
 
+// Return button for help screen
 void drawBackButton() {
   fill(230, 141, 69);
   rectMode(CENTER);
@@ -227,6 +436,7 @@ void drawBackButton() {
   text("Back", 100, 365);
 }
 
+// Draw the game map
 void drawMap() {
   rectMode(CORNER);
   background(0);
@@ -276,20 +486,9 @@ void drawMap() {
   rect(400, 160, 70, 20);
   fill(100);
   rect(400, 155, 70, 5);
-
-  fill(243, 174, 167);
-  noStroke();
-  for (int i = 0; i < coinX.length; i++) {
-    square(coinX[i], coinY[i], 10);
-    if (circleCircleCollisionCheck(pac_x, pac_y, 45, coinX[i], coinY[i], 10)) {
-      score += 5;
-      coinsCollected ++;
-      coinX[i] = -100;
-      coinY[i] = -100;
-    }
-  }
 }
 
+// Draw pacman
 void drawPacman(float x, float y, String direction) {
   fill(255, 251, 83);
   if (direction == "up" && allowedUp) {
@@ -335,17 +534,20 @@ void drawPacman(float x, float y, String direction) {
   }
 }
 
+// Draw death animation
 void deathAnimation(float x, float y) {
   fill(255, 251, 83);
   pac_dx = 0;
   pac_dy = 0;
   circle(x, y, 30);
   isAlive = true;
-  pac_x = 400;
+  pac_x = 300;
   pac_y = 350;
   direction = "none";
+  score -= 100;
 }
 
+// Draw ghosts
 void drawGhost(float x, float y, int type) {
   if (type == 0) {
     fill(115, 189, 202);
@@ -356,45 +558,54 @@ void drawGhost(float x, float y, int type) {
   } else if (type == 3) {
     fill(210, 48, 41);
   }
+  if (isEatingGhosts) {
+    fill(17, 47, 228);
+  }
   push();
   translate(x, y);
   beginShape();
   beginShape();
-  vertex(15, 0);
-  vertex(15, 20);
-  vertex(10, 15);
-  vertex(5, 20);
-  vertex(0, 15);
-  vertex(-5, 20);
-  vertex(-10, 15);
-  vertex(-15, 20);
-  vertex(-15, 0);
+  vertex(18, 0);
+  vertex(18, 30);
+  vertex(12, 25);
+  vertex(6, 30);
+  vertex(0, 25);
+  vertex(-6, 30);
+  vertex(-12, 25);
+  vertex(-18, 30);
+  vertex(-18, 0);
   endShape();
-  arc(0, 0, 30, 30, radians(180), radians(360), OPEN);
+  arc(0, 0, 36, 36, radians(180), radians(360), OPEN);
   fill(255);
-  circle(-6, -3, 9);
-  circle(6, -3, 9);
+  circle(-7, -3, 11);
+  circle(7, -3, 11);
   strokeWeight(3);
   stroke(0);
-  point(6, -3);
-  point(-6, -3);
+  point(7, -3);
+  point(-7, -3);
   pop();
 }
 
+// Circle circle collision check
 boolean circleCircleCollisionCheck(float x1, float y1, float d1, float x2, float y2, float d2) {
   float distance = dist(x1, y1, x2, y2);
   return (distance <= d1/2 + d2/2);
 }
 
+// Check if pacman is hitting intersection
 void checkIntersection(float x, float y, boolean up, boolean down, boolean left, boolean right) {
   if (!isOnIntersection) {
     if (direction == "up" && keyPressed == true && keyCode == DOWN) {
+      allowedDown = true;
       direction = "down";
     } else if (direction == "down" && keyPressed == true && keyCode == UP) {
+      allowedUp = true;
       direction = "up";
     } else if (direction == "left" && keyPressed == true && keyCode == RIGHT) {
+      allowedRight = true;
       direction = "right";
     } else if (direction == "right" && keyPressed == true && keyCode == LEFT) {
+      allowedLeft = true;
       direction = "left";
     }
   }
@@ -443,7 +654,7 @@ void setup() {
 }
 
 void draw() {
-  if (whatToDraw == "Start") {
+  if (whatToDraw == "Start") {  // Check what stage to draw
     drawStartScreen();
   } else if (whatToDraw == "Help") {
     drawHelpScreen();
@@ -453,10 +664,11 @@ void draw() {
     drawWinScreen();
   } else if (whatToDraw == "Game") {
     drawMap();
+    drawCoins();
     fill(255);
     for (int i = 0; i < interX.length; i++) {
-      circle(interX[i], interY[i], 5);
       checkIntersection(interX[i], interY[i], interUp[i], interDown[i], interLeft[i], interRight[i]);
+      checkGhostIntersection(interX[i], interY[i], interUp[i], interDown[i], interLeft[i], interRight[i]);
     }
     if (isAlive) {
       drawPacman(pac_x, pac_y, direction);
@@ -467,6 +679,8 @@ void draw() {
     for (int i = 0; i < ghostXY[0].length; i++) {
       drawGhost(ghostXY[0][i], ghostXY[1][i], ghostType[i]);
     }
+    changeDifficulty();
+    moveGhosts();
     teleportOnWalls();
     switchAnimation();
     checkGhostCollision();
@@ -474,8 +688,12 @@ void draw() {
     drawDeathCount();
     pac_x += pac_dx;
     pac_y += pac_dy;
+    isEatingGhostsTimer -= 0.1;
     checkIfLose();
     checkIfWin();
+    for (int i = 0; i < ghostDirection.length; i++) {
+      println(ghostDirection[i]);
+    }
   }
 }
 
@@ -498,12 +716,47 @@ void mousePressed() {
       score = 0;
       coinsCollected = 0;
       deathCount = 3;
-      pac_x = 400;
+      pac_x = 300;
       pac_y = 350;
+      pac_dx = 0;
+      pac_dy = 0;
+      direction = "none";
+      ghostCount = 1;
       for (int i = 0; i < coinX.length; i++) {
         coinX[i] = coinXBackup[i];
         coinY[i] = coinYBackup[i];
       }
+      for (int i = 0; i < coinX_Large.length; i++) {
+        coinX_Large[i] = coinXBackup_Large[i];
+        coinY_Large[i] = coinYBackup_Large[i];
+      }
+      for (int i = 0; i < ghostType.length; i++) {
+        ghostType[i] = int(random(0, 4));
+      }
+      ghostXY[0][0] = 360; 
+      ghostXY[0][1] = 386.666;
+      ghostXY[0][2] = 412.333;
+      ghostXY[0][3] = 440;
+      ghostXY[1][0] = 190;
+      ghostXY[1][1] = 200;
+      ghostXY[1][2] = 190;
+      ghostXY[1][3] = 200;
+      isFirstGhost[0] = true;
+      isFirstGhost[1] = true;
+      isFirstGhost[2] = true;
+      isFirstGhost[3] = true;
+      isEatingGhosts = false;
+      isEatingGhostsTimer = 0;
     }
   }
 }
+
+/*
+Peer Review:
+ 
+  Maxwell
+    - Work on the ghost pathfinding
+      - In progress
+    - Make the ghosts only able to move in either the X or Y directions
+      - Completed
+*/
